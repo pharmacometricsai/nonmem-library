@@ -242,7 +242,7 @@ what actually informs `R0`.
 
 ## Output tables
 
-Every `$TABLE` writes a `.tab` file. Three per run:
+Three tables per run:
 
 * `<model>.tab` - per-record predictions and residuals.
 * `<model>.prof` - the profiles that make an IDR fit interpretable:
