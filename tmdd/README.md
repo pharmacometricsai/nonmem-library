@@ -264,7 +264,7 @@ C,ID,TIME,AMT,RATE,DV,EVID,MDV,CMT,FLAG,ADDL,II,WT
 
 ## Output tables
 
-Every `$TABLE` writes a `.tab` file. Each run produces three:
+Each run writes three tables:
 
 * `<model>.tab` - per-record predictions and residuals.
 * `<model>.prof` - the analyte profiles, which is what makes a TMDD fit

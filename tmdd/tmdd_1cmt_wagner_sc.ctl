@@ -58,15 +58,6 @@ $PK
   LGTF1 = LOG(THETA(7)/(1-THETA(7))) + ETA(7)
   F1    = EXP(LGTF1)/(1+EXP(LGTF1))
 
-; ---- random effects exported to $TABLE --------------------------------
-  ET1   = ETA(1)
-  ET2   = ETA(2)
-  ET3   = ETA(3)
-  ET4   = ETA(4)
-  ET5   = ETA(5)
-  ET6   = ETA(6)
-  ET7   = ETA(7)
-
 ; ---- scaling (concentration = amount / volume) ------------------------
   S2 = V
 
@@ -99,12 +90,6 @@ $ERROR
   IRES  = DV - IPRED
   IWRES = IRES/IPRED
 
-; ---- residual error variances exported to $TABLE ----------------------
-  SG1   = SIGMA(1,1)   ; proportional, analyte 1
-  SG2   = SIGMA(2,2)   ; additive, analyte 1
-  SG3   = SIGMA(3,3)   ; proportional, analyte 2
-  SG4   = SIGMA(4,4)   ; additive, analyte 2
-
 ; ---- initial estimates -------------------------------------------------
 $THETA  (0, 0.2)             ; 1 CL    clearance (L/day)
 $THETA  (0, 3.0)             ; 2 V     central volume (L)
@@ -134,12 +119,12 @@ $ESTIMATION METHOD=1 INTER MAXEVAL=9999 NSIG=3 SIGL=9 PRINT=5 NOABORT POSTHOC
 ; $ESTIMATION METHOD=IMP INTERACTION EONLY=1 NITER=10 ISAMPLE=3000 PRINT=1
 $COVARIANCE PRINT=E UNCONDITIONAL
 
-$TABLE   ID TIME AMT RATE EVID MDV CMT FLAG DV IPRED IRES IWRES CWRES
-         PRED RES WRES ET1 ET2 ET3 ET4 ET5 ET6 ET7 SG1 SG2 SG3 SG4
+$TABLE   ID TIME AMT RATE EVID MDV CMT FLAG DV IPRED IRES IWRES
+         CWRES PRED RES WRES
          ONEHEADER NOPRINT FILE=tmdd_1cmt_wagner_sc.tab
 $TABLE   ID TIME CFR CTOT RFR RCX RTOT
          ONEHEADER NOPRINT FILE=tmdd_1cmt_wagner_sc.prof
-$TABLE   ID CL V KD KINT R0 KA F1 ET1 ET2 ET3 ET4 ET5 ET6 ET7
+$TABLE   ID CL V KD KINT R0 KA F1 ETA1 ETA2 ETA3 ETA4 ETA5 ETA6 ETA7
          FIRSTONLY ONEHEADER NOPRINT FILE=tmdd_1cmt_wagner_sc.par
 
 ;; ----------------------------------------------------------------------
@@ -149,5 +134,5 @@ $TABLE   ID CL V KD KINT R0 KA F1 ET1 ET2 ET3 ET4 ET5 ET6 ET7
 ;; ----------------------------------------------------------------------
 ; $SIMULATION (20260830) (20260831 NORMAL) ONLYSIM SUBPROBLEMS=200
 ; $TABLE ID TIME AMT RATE EVID MDV CMT FLAG DV IPRED CFR CTOT RFR RCX
-;        NOAPPEND ONEHEADER NOPRINT FILE=tmdd_1cmt_wagner_sc_sim.tab
+;        NOAPPEND ONEHEADER NOPRINT FILE=tmdd_1cmt_wagner_sc.tab
 
