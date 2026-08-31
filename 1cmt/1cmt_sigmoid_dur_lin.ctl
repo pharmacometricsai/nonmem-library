@@ -1,5 +1,6 @@
 ;; ==========================================================================
 ;; 1CMT_SIGMOID_DUR_LIN
+;; #7 of the one-compartment set
 ;;   Sigmoid absorption with duration
 ;;   Linear elimination
 ;; --------------------------------------------------------------------------
@@ -33,12 +34,6 @@ $PK
   KA    = THETA(3)*EXP(ETA(3))
   D1    = THETA(4)*EXP(ETA(4))
 
-; ---- random effects exported to $TABLE --------------------------------
-  ET1   = ETA(1)
-  ET2   = ETA(2)
-  ET3   = ETA(3)
-  ET4   = ETA(4)
-
 ; ---- scaling (concentration = amount / volume) ------------------------
   S2 = V
 
@@ -48,10 +43,6 @@ $ERROR
   Y     = IPRED + IPRED*EPS(1) + EPS(2)   ; combined prop. + add. error
   IRES  = DV - IPRED
   IWRES = IRES/IPRED
-
-; ---- residual error variances exported to $TABLE ----------------------
-  SG1   = SIGMA(1,1)          ; proportional
-  SG2   = SIGMA(2,2)          ; additive
 
 ; ---- initial estimates -------------------------------------------------
 $THETA  (0, 5.0)             ; 1 CL     clearance (L/h)
@@ -70,10 +61,10 @@ $SIGMA  0.01             ; 2 additive residual error (variance)
 $ESTIMATION METHOD=1 INTER MAXEVAL=9999 NSIG=3 SIGL=9 PRINT=5 NOABORT POSTHOC
 $COVARIANCE PRINT=E UNCONDITIONAL
 
-$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES PRED
-         RES WRES ET1 ET2 ET3 ET4 SG1 SG2
+$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES
+         PRED RES WRES
          ONEHEADER NOPRINT FILE=1cmt_sigmoid_dur_lin.tab
-$TABLE   ID CL V KA D1 ET1 ET2 ET3 ET4
+$TABLE   ID CL V KA D1 ETA1 ETA2 ETA3 ETA4
          FIRSTONLY ONEHEADER NOPRINT FILE=1cmt_sigmoid_dur_lin.par
 
 ;; ----------------------------------------------------------------------
@@ -83,5 +74,5 @@ $TABLE   ID CL V KA D1 ET1 ET2 ET3 ET4
 ;; ----------------------------------------------------------------------
 ; $SIMULATION (20260830) (20260831 NORMAL) ONLYSIM SUBPROBLEMS=200
 ; $TABLE ID TIME AMT RATE EVID MDV CMT DV IPRED
-;        NOAPPEND ONEHEADER NOPRINT FILE=1cmt_sigmoid_dur_lin_sim.tab
+;        NOAPPEND ONEHEADER NOPRINT FILE=1cmt_sigmoid_dur_lin.tab
 

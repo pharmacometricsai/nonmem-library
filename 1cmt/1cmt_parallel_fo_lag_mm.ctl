@@ -1,5 +1,6 @@
 ;; ==========================================================================
 ;; 1CMT_PARALLEL_FO_LAG_MM
+;; #26 of the one-compartment set
 ;;   Parallel first-order absorption with lag time
 ;;   Nonlinear elimination
 ;; --------------------------------------------------------------------------
@@ -44,16 +45,6 @@ $PK
   ALAG1 = THETA(7)*EXP(ETA(7))
   ALAG2 = THETA(8)*EXP(ETA(8))
 
-; ---- random effects exported to $TABLE --------------------------------
-  ET1   = ETA(1)
-  ET2   = ETA(2)
-  ET3   = ETA(3)
-  ET4   = ETA(4)
-  ET5   = ETA(5)
-  ET6   = ETA(6)
-  ET7   = ETA(7)
-  ET8   = ETA(8)
-
 ; ---- structural / input specification ---------------------------------
   F1 = DF
   F2 = 1 - DF
@@ -73,10 +64,6 @@ $ERROR
   Y     = IPRED + IPRED*EPS(1) + EPS(2)   ; combined prop. + add. error
   IRES  = DV - IPRED
   IWRES = IRES/IPRED
-
-; ---- residual error variances exported to $TABLE ----------------------
-  SG1   = SIGMA(1,1)          ; proportional
-  SG2   = SIGMA(2,2)          ; additive
 
 ; ---- initial estimates -------------------------------------------------
 $THETA  (0, 100.0)           ; 1 VM     Vmax (mg/h)
@@ -103,11 +90,11 @@ $SIGMA  0.01             ; 2 additive residual error (variance)
 $ESTIMATION METHOD=1 INTER MAXEVAL=9999 NSIG=3 SIGL=9 PRINT=5 NOABORT POSTHOC
 $COVARIANCE PRINT=E UNCONDITIONAL
 
-$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES PRED
-         RES WRES ET1 ET2 ET3 ET4 ET5 ET6 ET7 ET8 SG1 SG2
+$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES
+         PRED RES WRES
          ONEHEADER NOPRINT FILE=1cmt_parallel_fo_lag_mm.tab
-$TABLE   ID VM KM V KA1 KA2 DF ALAG1 ALAG2 ET1 ET2 ET3 ET4 ET5 ET6 ET7
-         ET8
+$TABLE   ID VM KM V KA1 KA2 DF ALAG1 ALAG2 ETA1 ETA2 ETA3 ETA4 ETA5 ETA6
+         ETA7 ETA8
          FIRSTONLY ONEHEADER NOPRINT FILE=1cmt_parallel_fo_lag_mm.par
 
 ;; ----------------------------------------------------------------------
@@ -117,5 +104,5 @@ $TABLE   ID VM KM V KA1 KA2 DF ALAG1 ALAG2 ET1 ET2 ET3 ET4 ET5 ET6 ET7
 ;; ----------------------------------------------------------------------
 ; $SIMULATION (20260830) (20260831 NORMAL) ONLYSIM SUBPROBLEMS=200
 ; $TABLE ID TIME AMT RATE EVID MDV CMT DV IPRED
-;        NOAPPEND ONEHEADER NOPRINT FILE=1cmt_parallel_fo_lag_mm_sim.tab
+;        NOAPPEND ONEHEADER NOPRINT FILE=1cmt_parallel_fo_lag_mm.tab
 

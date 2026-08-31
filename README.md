@@ -1,7 +1,5 @@
 # NONMEM model library
 
-## Experimental, please check before use.
-
 A library of **210 runnable NONMEM control streams** covering the standard
 structural models used in population PK and PK/PD analysis: compartmental
 disposition with thirteen absorption sub-models, target-mediated drug
@@ -63,11 +61,10 @@ Before the first run of any file:
 | `tmdd/` | `tmdd_<n>cmt_<form>_<route>` | `tmdd_3cmt_qss_sc.ctl` |
 | `idr/` | `idr<1-4>_<n>cmt_<route>_<link>` | `idr2_2cmt_oral_effect.ctl` |
 
-Model numbers appear only in each folder's Contents table - not in the file
-name, and not inside the files. Output tables are named after the control
-stream that wrote them, so `2cmt_transit_mmlin.ctl` produces
-`2cmt_transit_mmlin.tab`, `2cmt_transit_mmlin.par`, and - where the family has
-one - `2cmt_transit_mmlin.prof`.
+Model numbers appear in each folder's Contents table and in each file's header
+comment, but not in the file name. Output tables are named after the control
+stream, so `2cmt_transit_mmlin.ctl` writes `2cmt_transit_mmlin.tab`,
+`.par`, and where applicable `.prof`.
 
 ---
 
@@ -181,38 +178,6 @@ The `tmdd/` and `idr/` files also carry a commented two-step SAEM + IMP
 alternative, which is often a more robust route to the optimum for a
 nonlinear or joint PK/PD fit. `$COVARIANCE` is enabled everywhere; drop it for
 exploratory runs.
-
-### Output tables
-
-Every `$TABLE` in this library writes a `.tab`-family file named after its
-control stream:
-
-| File | Scope | Contents |
-|------|-------|----------|
-| `<model>.tab` | one row per record | `IPRED IRES IWRES CWRES PRED RES WRES`, the `ET` and `SG` columns below, and the input items |
-| `<model>.par` | one row per subject (`FIRSTONLY`) | the individual structural parameters and the `ET` columns |
-| `<model>.prof` | one row per record | analyte/response profiles - `tmdd/` and `idr/` only |
-| `<model>_sim.tab` | one row per record | written by the commented-out simulation block |
-
-`CWRES` is requested in every main table. It is a built-in NONMEM 7 item, so
-no `$ABBREVIATED COMRES` machinery is needed.
-
-Two sets of derived columns are exported so that diagnostics can be built
-without going back to the `.ext` file:
-
-* **`ET1`, `ET2`, ...** - the individual random effects, defined explicitly in
-  `$PK` as `ETn = ETA(n)`, one per `$OMEGA`. Writing them out as named
-  variables rather than relying on the `ETAn` table alias keeps them portable
-  across NONMEM versions.
-* **`SG1`, `SG2`, ...** - the residual error variances, defined in `$ERROR` as
-  `SGn = SIGMA(n,n)`, one per `$SIGMA`. `SIGMA(i,j)` is a reserved variable in
-  NM-TRAN abbreviated code from NONMEM 7 onward; on an older version, delete
-  the two or four lines under the "residual error variances" comment and the
-  matching `SG` entries in `$TABLE`.
-
-In `1cmt/`, `2cmt/` and `3cmt/` there are two `SG` columns (proportional,
-additive). In `tmdd/` and `idr/` there are four, because each of the two
-analytes carries its own error model.
 
 ---
 

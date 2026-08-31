@@ -62,8 +62,8 @@ Plus this `README.md`.
 1cmt_<absorption>_<elimination>.ctl
 ```
 
-Model numbers 1-39 are listed in the Contents table above; they are
-not part of the file name and do not appear inside the files.
+Model numbers 1-39 are in the Contents table above and in each
+file's header comment; they are not part of the file name.
 
 * `<absorption>` – absorption sub-model:
   * `fo_nolag` – First-order absorption without lag time
@@ -345,7 +345,7 @@ nmfe75 1cmt_fo_nolag_lin.ctl 1cmt_fo_nolag_lin.lst
 execute 1cmt_fo_nolag_lin.ctl -dir=1cmt_fo_nolag_lin
 ```
 
-Every `$TABLE` writes a `.tab` file. Each run produces two:
+Each run writes two tables:
 
 * `<model>.tab` – per-record predictions and residuals
   (`IPRED IRES IWRES CWRES PRED RES WRES`).
@@ -358,7 +358,7 @@ Every file ends with a commented simulation block. Comment out
 
 ```
 $SIMULATION (20260830) (20260831 NORMAL) ONLYSIM SUBPROBLEMS=200
-$TABLE ID TIME AMT RATE EVID MDV CMT DV IPRED NOAPPEND ONEHEADER NOPRINT FILE=<model>_sim.tab
+$TABLE ID TIME AMT RATE EVID MDV CMT DV IPRED NOAPPEND ONEHEADER NOPRINT FILE=<model>.tab
 ```
 
 ---
