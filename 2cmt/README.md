@@ -66,8 +66,8 @@ Plus this `README.md`.
 2cmt_<absorption>_<elimination>.ctl
 ```
 
-Model numbers 1-39 are listed in the Contents table above; they are
-not part of the file name and do not appear inside the files.
+Model numbers 1-39 are in the Contents table above and in each
+file's header comment; they are not part of the file name.
 
 * `<absorption>`:
   * `fo_nolag` - First-order absorption without lag time
@@ -396,7 +396,7 @@ nmfe75 2cmt_fo_nolag_lin.ctl 2cmt_fo_nolag_lin.lst
 execute 2cmt_fo_nolag_lin.ctl -dir=2cmt_fo_nolag_lin
 ```
 
-Every `$TABLE` writes a `.tab` file. Each run produces two:
+Each run writes two tables:
 
 * `<model>.tab` - per-record predictions and residuals.
 * `<model>.par` - one row per subject with individual parameters and ETAs.
