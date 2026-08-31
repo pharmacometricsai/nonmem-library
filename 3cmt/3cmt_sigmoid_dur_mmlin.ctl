@@ -1,5 +1,6 @@
 ;; ==========================================================================
 ;; 3CMT_SIGMOID_DUR_MMLIN
+;; #9 of the three-compartment set
 ;;   Sigmoid absorption with duration
 ;;   Nonlinear and linear elimination
 ;; --------------------------------------------------------------------------
@@ -47,18 +48,6 @@ $PK
   KA    = THETA(9)*EXP(ETA(9))
   D1    = THETA(10)*EXP(ETA(10))
 
-; ---- random effects exported to $TABLE --------------------------------
-  ET1   = ETA(1)
-  ET2   = ETA(2)
-  ET3   = ETA(3)
-  ET4   = ETA(4)
-  ET5   = ETA(5)
-  ET6   = ETA(6)
-  ET7   = ETA(7)
-  ET8   = ETA(8)
-  ET9   = ETA(9)
-  ET10  = ETA(10)
-
 ; ---- scaling (concentration = amount / volume) ------------------------
   S2 = V2
 
@@ -80,10 +69,6 @@ $ERROR
   Y     = IPRED + IPRED*EPS(1) + EPS(2)   ; combined prop. + add. error
   IRES  = DV - IPRED
   IWRES = IRES/IPRED
-
-; ---- residual error variances exported to $TABLE ----------------------
-  SG1   = SIGMA(1,1)          ; proportional
-  SG2   = SIGMA(2,2)          ; additive
 
 ; ---- initial estimates -------------------------------------------------
 $THETA  (0, 5.0)             ; 1 CL     linear clearance (L/h)
@@ -114,11 +99,11 @@ $SIGMA  0.01             ; 2 additive residual error (variance)
 $ESTIMATION METHOD=1 INTER MAXEVAL=9999 NSIG=3 SIGL=9 PRINT=5 NOABORT POSTHOC
 $COVARIANCE PRINT=E UNCONDITIONAL
 
-$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES PRED
-         RES WRES ET1 ET2 ET3 ET4 ET5 ET6 ET7 ET8 ET9 ET10 SG1 SG2
+$TABLE   ID TIME AMT RATE EVID MDV CMT DV IPRED IRES IWRES CWRES
+         PRED RES WRES
          ONEHEADER NOPRINT FILE=3cmt_sigmoid_dur_mmlin.tab
-$TABLE   ID CL V2 Q3 V3 Q4 V4 VM KM KA D1 ET1 ET2 ET3 ET4 ET5 ET6 ET7
-         ET8 ET9 ET10
+$TABLE   ID CL V2 Q3 V3 Q4 V4 VM KM KA D1 ETA1 ETA2 ETA3 ETA4 ETA5 ETA6
+         ETA7 ETA8 ETA9 ETA10
          FIRSTONLY ONEHEADER NOPRINT FILE=3cmt_sigmoid_dur_mmlin.par
 
 ;; ----------------------------------------------------------------------
@@ -128,5 +113,5 @@ $TABLE   ID CL V2 Q3 V3 Q4 V4 VM KM KA D1 ET1 ET2 ET3 ET4 ET5 ET6 ET7
 ;; ----------------------------------------------------------------------
 ; $SIMULATION (20260830) (20260831 NORMAL) ONLYSIM SUBPROBLEMS=200
 ; $TABLE ID TIME AMT RATE EVID MDV CMT DV IPRED
-;        NOAPPEND ONEHEADER NOPRINT FILE=3cmt_sigmoid_dur_mmlin_sim.tab
+;        NOAPPEND ONEHEADER NOPRINT FILE=3cmt_sigmoid_dur_mmlin.tab
 
